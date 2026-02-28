@@ -53,63 +53,48 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. Contact Form Submission Handling
+    // 3. Contact Form Submission Handling (WhatsApp Redirect)
     const contactForm = document.getElementById('contact-form');
-    const formMessage = document.getElementById('form-message');
 
     if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
+        contactForm.addEventListener('submit', (e) => {
             e.preventDefault(); // Prevent actual form submission to server
 
-            // Basic UI feedback
-            const btn = contactForm.querySelector('button[type="submit"]');
-            const originalText = btn.textContent;
-            btn.textContent = 'Invio in corso...';
-            btn.disabled = true;
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const service = document.getElementById('service').value;
+            const message = document.getElementById('message').value;
 
-            const url = contactForm.getAttribute('action');
-            const isPlaceholder = url.includes('YOUR_FORM_ID');
+            // Define phone numbers for each Paolo
+            const phoneFranchi = '393479183726'; // Imbiancatura, Altro
+            const phoneCaronni = '393391628652'; // Antimuffa, Preparazione Superfici
 
-            try {
-                if (!isPlaceholder) {
-                    const formData = new FormData(contactForm);
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
-                    if (!response.ok) {
-                        throw new Error('Errore di rete');
-                    }
-                } else {
-                    // Simulate API request delay if ID not set
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                }
+            // Logic to choose which Paolo gets the message based on service
+            let targetPhone = phoneFranchi; // Default to Franchi
 
-                contactForm.reset();
-                formMessage.style.display = 'block';
-                formMessage.textContent = 'Grazie! La tua richiesta è stata inviata con successo. Ti contatteremo al più presto per un preventivo.';
-                formMessage.style.backgroundColor = '#d4edda';
-                formMessage.style.color = '#155724';
-                formMessage.style.border = '1px solid #c3e6cb';
-
-            } catch (error) {
-                formMessage.style.display = 'block';
-                formMessage.textContent = 'Si è verificato un errore. Riprova più tardi o contattaci telefonicamente.';
-                formMessage.style.backgroundColor = '#f8d7da';
-                formMessage.style.color = '#721c24';
-                formMessage.style.border = '1px solid #f5c6cb';
-            } finally {
-                btn.textContent = originalText;
-                btn.disabled = false;
-
-                // Hide message after 5 seconds
-                setTimeout(() => {
-                    formMessage.style.display = 'none';
-                }, 5000);
+            if (service === 'antimuffa' || service === 'preparazione') {
+                targetPhone = phoneCaronni;
             }
+
+            // Construct WhatsApp message
+            const waMessage = `Ciao, sono ${name}.\n\n` +
+                `Vorrei informazioni per il servizio di: ${service.toUpperCase()}.\n\n` +
+                `I miei contatti:\n` +
+                `Email: ${email}\n` +
+                `Telefono: ${phone}\n\n` +
+                `Messaggio:\n${message}`;
+
+            // URL Encode the message
+            const encodedMessage = encodeURIComponent(waMessage);
+
+            // Open WhatsApp in a new tab
+            const waUrl = `https://wa.me/${targetPhone}?text=${encodedMessage}`;
+            window.open(waUrl, '_blank');
+
+            // Optional: reset form after sending
+            contactForm.reset();
         });
     }
 
