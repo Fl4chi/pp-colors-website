@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formMessage = document.getElementById('form-message');
 
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault(); // Prevent actual form submission to server
 
             // Basic UI feedback
@@ -67,8 +67,27 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.textContent = 'Invio in corso...';
             btn.disabled = true;
 
-            // Simulate API request delay
-            setTimeout(() => {
+            const url = contactForm.getAttribute('action');
+            const isPlaceholder = url.includes('YOUR_FORM_ID');
+
+            try {
+                if (!isPlaceholder) {
+                    const formData = new FormData(contactForm);
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    if (!response.ok) {
+                        throw new Error('Errore di rete');
+                    }
+                } else {
+                    // Simulate API request delay if ID not set
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                }
+
                 contactForm.reset();
                 formMessage.style.display = 'block';
                 formMessage.textContent = 'Grazie! La tua richiesta è stata inviata con successo. Ti contatteremo al più presto per un preventivo.';
@@ -76,6 +95,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 formMessage.style.color = '#155724';
                 formMessage.style.border = '1px solid #c3e6cb';
 
+            } catch (error) {
+                formMessage.style.display = 'block';
+                formMessage.textContent = 'Si è verificato un errore. Riprova più tardi o contattaci telefonicamente.';
+                formMessage.style.backgroundColor = '#f8d7da';
+                formMessage.style.color = '#721c24';
+                formMessage.style.border = '1px solid #f5c6cb';
+            } finally {
                 btn.textContent = originalText;
                 btn.disabled = false;
 
@@ -83,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => {
                     formMessage.style.display = 'none';
                 }, 5000);
-            }, 1000);
+            }
         });
     }
 
@@ -93,6 +119,41 @@ document.addEventListener('DOMContentLoaded', () => {
             duration: 800,
             once: true,
             offset: 100
+        });
+    }
+
+    // 5. Dynamic Footer Year
+    const yearSpan = document.getElementById('current-year');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
+
+    // 6. Scroll to Top Button
+    const scrollTopBtn = document.getElementById('scroll-top');
+    if (scrollTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // 7. Initialize GLightbox
+    if (typeof GLightbox !== 'undefined') {
+        const lightbox = GLightbox({
+            selector: '.glightbox',
+            touchNavigation: true,
+            loop: true,
+            autoplayVideos: true
         });
     }
 

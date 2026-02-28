@@ -226,8 +226,9 @@ header.scrolled .hamburger {
    HERO SECTION
 ========================================= */
 .hero {
-    height: 100vh;
-    min-height: 600px;
+    min-height: 100vh;
+    height: auto;
+    padding: 120px 0 80px;
     background-image: url('../assets/images/hero-bg.png');
     background-size: cover;
     background-position: center;
@@ -369,9 +370,11 @@ header.scrolled .hamburger {
     .hero-buttons {
         flex-direction: column;
         gap: 15px;
+        width: 100%;
     }
 
-    .btn {
+    .hero-buttons .btn {
+        width: 100%;
         text-align: center;
     }
 
@@ -768,6 +771,40 @@ footer {
 /* =========================================
    FLOATING BUTTONS & EXTRAS
 ========================================= */
+.scroll-top {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 60px;
+    height: 60px;
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    border-radius: 50%;
+    border: none;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-medium);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    transform: translateY(20px);
+}
+
+.scroll-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-top:hover {
+    background-color: var(--color-primary);
+    transform: translateY(-5px);
+}
+
 .float-wa {
     position: fixed;
     width: 60px;

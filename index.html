@@ -7,6 +7,14 @@
     <title>PP&Colors | Imbiancature e Decorazioni d'Interni</title>
     <meta name="description"
         content="PP&Colors: Trasformiamo i tuoi spazi con professionalità. Servizi di imbiancatura, decorazione e cartongesso di alta qualità a cura di Paolo Franchi e Paolo Caronni.">
+    <!-- SEO and Open Graph -->
+    <meta property="og:title" content="PP&Colors | Imbiancature e Decorazioni d'Interni">
+    <meta property="og:description"
+        content="Trasformiamo i tuoi spazi con professionalità. Servizi di imbiancatura, decorazione e cartongesso di alta qualità a cura di Paolo Franchi e Paolo Caronni.">
+    <meta property="og:image" content="https://www.ppandcolors.com/assets/images/logo.png">
+    <meta property="og:url" content="https://www.ppandcolors.com">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/logo.png">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +24,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- AOS Animation CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- GLightbox CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -39,9 +49,9 @@
                     <li><a href="#contatti" class="btn btn-outline">Preventivo Gratuito</a></li>
                 </ul>
             </nav>
-            <div class="hamburger">
-                <i class="fas fa-bars"></i>
-            </div>
+            <button class="hamburger" aria-label="Apri menu di navigazione">
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
         </div>
     </header>
 
@@ -186,8 +196,13 @@
             <div class="portfolio-grid">
                 <!-- Portfolio item 1 -->
                 <div class="portfolio-item" data-aos="zoom-in" data-aos-delay="100">
-                    <img src="assets/images/portfolio_living.png" alt="Soggiorno Moderno, Imbiancatura"
-                        style="width: 100%; height: 250px; object-fit: cover; display: block; border-bottom: 3px solid var(--color-primary);">
+                    <a href="assets/images/portfolio_living.png" class="glightbox"
+                        data-description="Soggiorno Moderno, Imbiancatura d'interni"
+                        aria-label="Visualizza ingrandimento Soggiorno Moderno">
+                        <img src="assets/images/portfolio_living.png" alt="Soggiorno Moderno, Imbiancatura"
+                            loading="lazy"
+                            style="width: 100%; height: 250px; object-fit: cover; display: block; border-bottom: 3px solid var(--color-primary);">
+                    </a>
                     <div class="portfolio-info">
                         <h4>Soggiorno Moderno</h4>
                         <p>Imbiancatura d'interni</p>
@@ -195,8 +210,12 @@
                 </div>
                 <!-- Portfolio item 2 -->
                 <div class="portfolio-item" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="assets/images/portfolio_facade.png" alt="Facciata Esterna"
-                        style="width: 100%; height: 250px; object-fit: cover; display: block; border-bottom: 3px solid var(--color-primary);">
+                    <a href="assets/images/portfolio_facade.png" class="glightbox"
+                        data-description="Facciata Esterna, Tinteggiatura e ripristino"
+                        aria-label="Visualizza ingrandimento Facciata Esterna">
+                        <img src="assets/images/portfolio_facade.png" alt="Facciata Esterna" loading="lazy"
+                            style="width: 100%; height: 250px; object-fit: cover; display: block; border-bottom: 3px solid var(--color-primary);">
+                    </a>
                     <div class="portfolio-info">
                         <h4>Facciata Esterna</h4>
                         <p>Tinteggiatura e ripristino</p>
@@ -204,8 +223,12 @@
                 </div>
                 <!-- Portfolio item 3 -->
                 <div class="portfolio-item" data-aos="zoom-in" data-aos-delay="300">
-                    <img src="assets/images/portfolio_bedroom.png" alt="Camera da Letto, Colori"
-                        style="width: 100%; height: 250px; object-fit: cover; display: block; border-bottom: 3px solid var(--color-primary);">
+                    <a href="assets/images/portfolio_bedroom.png" class="glightbox"
+                        data-description="Camera da Letto, Colori pastello e stuccatura"
+                        aria-label="Visualizza ingrandimento Camera da Letto">
+                        <img src="assets/images/portfolio_bedroom.png" alt="Camera da Letto, Colori" loading="lazy"
+                            style="width: 100%; height: 250px; object-fit: cover; display: block; border-bottom: 3px solid var(--color-primary);">
+                    </a>
                     <div class="portfolio-info">
                         <h4>Camera da Letto</h4>
                         <p>Colori pastello e stuccatura</p>
@@ -261,19 +284,20 @@
                 </div>
             </div>
             <div class="contact-form-container" data-aos="fade-left">
-                <form id="contact-form" class="contact-form">
+                <form id="contact-form" class="contact-form" action="https://formspree.io/f/mreadwqa" method="POST">
                     <h3>Richiedi Preventivo</h3>
                     <div class="form-group">
-                        <input type="text" id="name" placeholder="Nome e Cognome" required>
+                        <input type="text" id="name" name="name" placeholder="Nome e Cognome"
+                            aria-label="Nome e Cognome" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" id="email" placeholder="Email" required>
+                        <input type="email" id="email" name="email" placeholder="Email" aria-label="Email" required>
                     </div>
                     <div class="form-group">
-                        <input type="tel" id="phone" placeholder="Telefono">
+                        <input type="tel" id="phone" name="phone" placeholder="Telefono" aria-label="Telefono">
                     </div>
                     <div class="form-group">
-                        <select id="service" required>
+                        <select id="service" name="service" aria-label="Servizio di interesse" required>
                             <option value="" disabled selected>Servizio di interesse</option>
                             <option value="imbiancatura">Imbiancatura</option>
                             <option value="antimuffa">Trattamenti Antimuffa</option>
@@ -282,7 +306,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <textarea id="message" rows="4" placeholder="Parlaci del tuo progetto" required></textarea>
+                        <textarea id="message" name="message" rows="4" placeholder="Parlaci del tuo progetto"
+                            aria-label="Parlaci del tuo progetto" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Invia Richiesta</button>
                     <div id="form-message"
@@ -305,13 +330,14 @@
                 <p>Professionisti del colore al tuo servizio.</p>
             </div>
             <div class="footer-social">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                <a href="https://wa.me/393479183726" aria-label="WhatsApp"><i class="fab fa-whatsapp"
+                        aria-hidden="true"></i></a>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 PP&Colors. Tutti i diritti riservati.</p>
+            <p>&copy; <span id="current-year">2026</span> PP&Colors. Tutti i diritti riservati.</p>
         </div>
     </footer>
 
@@ -321,8 +347,15 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <!-- Scroll to Top Button -->
+    <button id="scroll-top" class="scroll-top" aria-label="Torna in alto">
+        <i class="fas fa-chevron-up" aria-hidden="true"></i>
+    </button>
+
     <!-- AOS Animation JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- GLightbox JS -->
+    <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
     <!-- App JavaScript -->
     <script src="js/main.js"></script>
 </body>
