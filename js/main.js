@@ -53,48 +53,67 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. Contact Form Submission Handling (WhatsApp Redirect)
-    const contactForm = document.getElementById('contact-form');
+    // 3. Contact Form Submission Handling (Dual WhatsApp Buttons)
+    const btnFranchi = document.getElementById('btn-franchi');
+    const btnCaronni = document.getElementById('btn-caronni');
+    const formError = document.getElementById('form-error');
 
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault(); // Prevent actual form submission to server
+    // Function to handle WhatsApp sending
+    const sendToWhatsApp = (targetPhone) => {
+        // Get form values
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const serviceNode = document.getElementById('service');
+        const service = serviceNode ? serviceNode.value : '';
+        const message = document.getElementById('message').value.trim();
 
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const service = document.getElementById('service').value;
-            const message = document.getElementById('message').value;
-
-            // Define phone numbers for each Paolo
-            const phoneFranchi = '393479183726'; // Imbiancatura, Altro
-            const phoneCaronni = '393391628652'; // Antimuffa, Preparazione Superfici
-
-            // Logic to choose which Paolo gets the message based on service
-            let targetPhone = phoneFranchi; // Default to Franchi
-
-            if (service === 'antimuffa' || service === 'preparazione') {
-                targetPhone = phoneCaronni;
+        // Basic validation for required fields
+        if (!name || !email || !message) {
+            if (formError) {
+                formError.style.display = 'block';
+                setTimeout(() => {
+                    formError.style.display = 'none';
+                }, 5000);
             }
+            return;
+        }
 
-            // Construct WhatsApp message
-            const waMessage = `Ciao, sono ${name}.\n\n` +
-                `Vorrei informazioni per il servizio di: ${service.toUpperCase()}.\n\n` +
-                `I miei contatti:\n` +
-                `Email: ${email}\n` +
-                `Telefono: ${phone}\n\n` +
-                `Messaggio:\n${message}`;
+        // Hide error if previously shown and fields are now valid
+        if (formError) formError.style.display = 'none';
 
-            // URL Encode the message
-            const encodedMessage = encodeURIComponent(waMessage);
+        const serviceText = service ? service.toUpperCase() : 'Non specificato';
 
-            // Open WhatsApp in a new tab
-            const waUrl = `https://wa.me/${targetPhone}?text=${encodedMessage}`;
-            window.open(waUrl, '_blank');
+        // Construct WhatsApp message
+        const waMessage = `Ciao, sono ${name}.\n\n` +
+            `Vorrei informazioni per il servizio di: ${serviceText}.\n\n` +
+            `I miei contatti:\n` +
+            `Email: ${email}\n` +
+            `Telefono: ${phone || 'Non specificato'}\n\n` +
+            `Messaggio:\n${message}`;
 
-            // Optional: reset form after sending
-            contactForm.reset();
+        // URL Encode the message
+        const encodedMessage = encodeURIComponent(waMessage);
+
+        // Open WhatsApp in a new tab
+        const waUrl = `https://wa.me/${targetPhone}?text=${encodedMessage}`;
+        window.open(waUrl, '_blank');
+
+        // Optional: reset form after sending
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) contactForm.reset();
+    };
+
+    // Event listeners for the two buttons
+    if (btnFranchi) {
+        btnFranchi.addEventListener('click', () => {
+            sendToWhatsApp('393479183726'); // Paolo Franchi's number
+        });
+    }
+
+    if (btnCaronni) {
+        btnCaronni.addEventListener('click', () => {
+            sendToWhatsApp('393391628652'); // Paolo Caronni's number
         });
     }
 

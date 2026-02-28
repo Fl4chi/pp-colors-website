@@ -297,8 +297,8 @@
                         <input type="tel" id="phone" name="phone" placeholder="Telefono" aria-label="Telefono">
                     </div>
                     <div class="form-group">
-                        <select id="service" name="service" aria-label="Servizio di interesse" required>
-                            <option value="" disabled selected>Servizio di interesse</option>
+                        <select id="service" name="service" aria-label="Servizio di interesse">
+                            <option value="" disabled selected>Servizio di interesse (Opzionale)</option>
                             <option value="imbiancatura">Imbiancatura</option>
                             <option value="antimuffa">Trattamenti Antimuffa</option>
                             <option value="preparazione">Preparazione Superfici</option>
@@ -309,9 +309,19 @@
                         <textarea id="message" name="message" rows="4" placeholder="Parlaci del tuo progetto"
                             aria-label="Parlaci del tuo progetto" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block">Invia Richiesta</button>
-                    <div id="form-message"
-                        style="display:none; margin-top:15px; text-align:center; padding: 10px; border-radius: 4px;">
+                    <div class="whatsapp-buttons-container" style="display: flex; flex-direction: column; gap: 15px;">
+                        <button type="button" id="btn-franchi" class="btn btn-primary btn-block"
+                            style="background-color: #25d366; border-color: #25d366; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <i class="fab fa-whatsapp" style="font-size: 1.2rem;"></i> Invia a Paolo Franchi
+                        </button>
+                        <button type="button" id="btn-caronni" class="btn btn-primary btn-block"
+                            style="background-color: #25d366; border-color: #25d366; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                            <i class="fab fa-whatsapp" style="font-size: 1.2rem;"></i> Invia a Paolo Caronni
+                        </button>
+                    </div>
+                    <div id="form-error"
+                        style="display:none; margin-top:15px; text-align:center; padding: 10px; border-radius: 4px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;">
+                        Per favore, compila tutti i campi obbligatori prima di inviare.
                     </div>
                 </form>
             </div>

@@ -837,7 +837,7 @@ footer {
     }
 
     70% {
-        transform: scale(1.05);
+        transform: scale(1);
         box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
     }
 
@@ -845,6 +845,18 @@ footer {
         transform: scale(1);
         box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
     }
+}
+
+/* WhatsApp Form Buttons */
+.whatsapp-buttons-container button {
+    transition: var(--transition);
+}
+
+.whatsapp-buttons-container button:hover {
+    background-color: #1ebe57 !important;
+    border-color: #1ebe57 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
 }
 
 /* Responsive Adjustments Expansion */
